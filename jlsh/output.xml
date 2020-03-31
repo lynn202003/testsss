@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.1.2 (Python 3.6.5 on win32)" generated="20200108 17:29:20.382" rpa="false">
+<suite id="s1" name="Login" source="D:\API\jlsh\tc\login">
+<suite id="s1-s1" name="Username" source="D:\API\jlsh\tc\login\username.robot">
+<test id="s1-s1-t1" name="检查商品是否添加成功">
+<kw name="Deleteall" library="pylib.newmerchant" type="setup">
+<msg timestamp="20200108 17:29:20.709" level="INFO">[]</msg>
+<status status="PASS" starttime="20200108 17:29:20.637" endtime="20200108 17:29:20.709"></status>
+</kw>
+<kw name="Login" library="pylib.newmerchant">
+<arguments>
+<arg>&amp;{userinfo}[username]</arg>
+<arg>&amp;{userinfo}[password]</arg>
+<arg>&amp;{userinfo}[port]</arg>
+</arguments>
+<assign>
+<var>${tokenid}</var>
+</assign>
+<msg timestamp="20200108 17:29:20.748" level="INFO">${tokenid} = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMTMyNjI4NDkyNTAiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lk...</msg>
+<status status="PASS" starttime="20200108 17:29:20.710" endtime="20200108 17:29:20.748"></status>
+</kw>
+<kw name="Addgoods" library="pylib.newmerchant">
+<arguments>
+<arg>${tokenid}</arg>
+<arg>@{addgoodsinfo}[0]</arg>
+<arg>@{addgoodsinfo}[1]</arg>
+<arg>@{addgoodsinfo}[2]</arg>
+<arg>@{addgoodsinfo}[3]</arg>
+<arg>@{addgoodsinfo}[4]</arg>
+<arg>@{addgoodsinfo}[5]</arg>
+<arg>@{addgoodsinfo}[6]</arg>
+<arg>@{addgoodsinfo}[7]</arg>
+<arg>@{addgoodsinfo}[8]</arg>
+<arg>@{addgoodsinfo}[9]</arg>
+</arguments>
+<msg timestamp="20200108 17:29:20.791" level="INFO">{'data': None, 'success': True, 'error': {'code': 0, 'message': None}}</msg>
+<status status="PASS" starttime="20200108 17:29:20.748" endtime="20200108 17:29:20.791"></status>
+</kw>
+<kw name="Listgoods" library="pylib.newmerchant">
+<arguments>
+<arg>${tokenid}</arg>
+<arg>http://47.96.83.35:5001</arg>
+</arguments>
+<assign>
+<var>${goodslist}</var>
+</assign>
+<msg timestamp="20200108 17:29:20.825" level="INFO">[{'GoodsId': 282, 'GoodsName': '娃哈哈', 'GoodsNorms': '100ml', 'PurchasePrice': 12.0, 'OfferPrice': 8.0, 'GoodsCount': '20', 'Status': '已上架', 'CreatedAt': '2020-01-08 17:29:21', 'UpedAt': '2020-01-08 17:29:21', 'Sort': 2, 'Description': '娃哈哈很好喝', 'PicUri': 'http://qiniu.shenshoukeji.net/1223145628157671970591108c62b58894f2d1f69f1ae9016b94005.jpeg', 'GoodsDetails': '非常喜欢喝娃哈哈'}]</msg>
+<msg timestamp="20200108 17:29:20.825" level="INFO">${goodslist} = [{'GoodsId': 282, 'GoodsName': '娃哈哈', 'GoodsNorms': '100ml', 'PurchasePrice': 12.0, 'OfferPrice': 8.0, 'GoodsCount': '20', 'Status': '已上架', 'CreatedAt': '2020-01-08 17:29:21', 'UpedAt': '2020-01-08 17...</msg>
+<status status="PASS" starttime="20200108 17:29:20.791" endtime="20200108 17:29:20.825"></status>
+</kw>
+<kw name="${goods} IN [ @{goodslist} ]" type="for">
+<kw name="${goods} = {'GoodsId': 282, 'GoodsName': '娃哈哈', 'GoodsNorms': '100ml', 'PurchasePrice': 12.0, 'OfferPrice': 8.0, 'GoodsCount': '20', 'Status': '已上架', 'CreatedAt': '2020-01-08 17:29:21', 'UpedAt': '2020-01-08 17:..." type="foritem">
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>&amp;{goods}[GoodsName]</arg>
+<arg>娃哈哈</arg>
+</arguments>
+<status status="PASS" starttime="20200108 17:29:20.826" endtime="20200108 17:29:20.827"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>添加成功</arg>
+</arguments>
+<status status="PASS" starttime="20200108 17:29:20.827" endtime="20200108 17:29:20.827"></status>
+</kw>
+<status status="PASS" starttime="20200108 17:29:20.826" endtime="20200108 17:29:20.827"></status>
+</kw>
+<status status="PASS" starttime="20200108 17:29:20.825" endtime="20200108 17:29:20.827"></status>
+</kw>
+<kw name="Deleteall" library="pylib.newmerchant" type="teardown">
+<msg timestamp="20200108 17:29:20.972" level="INFO">[{'GoodsId': 282, 'GoodsName': '娃哈哈', 'GoodsNorms': '100ml', 'PurchasePrice': 12.0, 'OfferPrice': 8.0, 'GoodsCount': '20', 'Status': '已上架', 'CreatedAt': '2020-01-08 17:29:21', 'UpedAt': '2020-01-08 17:29:21', 'Sort': 2, 'Description': '娃哈哈很好喝', 'PicUri': 'http://qiniu.shenshoukeji.net/1223145628157671970591108c62b58894f2d1f69f1ae9016b94005.jpeg', 'GoodsDetails': '非常喜欢喝娃哈哈'}]
+{'data': None, 'success': True, 'error': {'code': 0, 'message': None}}</msg>
+<status status="PASS" starttime="20200108 17:29:20.828" endtime="20200108 17:29:20.973"></status>
+</kw>
+<doc>检查商品</doc>
+<tags>
+<tag>主流程测试</tag>
+</tags>
+<status status="PASS" starttime="20200108 17:29:20.634" endtime="20200108 17:29:20.974" critical="yes"></status>
+</test>
+<test id="s1-s1-t2" name="更新商品">
+<kw name="Deleteall" library="pylib.newmerchant" type="setup">
+<msg timestamp="20200108 17:29:21.060" level="INFO">[]</msg>
+<status status="PASS" starttime="20200108 17:29:20.983" endtime="20200108 17:29:21.060"></status>
+</kw>
+<kw name="Login" library="pylib.newmerchant">
+<arguments>
+<arg>13262849250</arg>
+<arg>a123321</arg>
+<arg>http://47.96.83.35:5001</arg>
+</arguments>
+<assign>
+<var>${tokenid}</var>
+</assign>
+<msg timestamp="20200108 17:29:21.101" level="INFO">${tokenid} = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMTMyNjI4NDkyNTAiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lk...</msg>
+<status status="PASS" starttime="20200108 17:29:21.061" endtime="20200108 17:29:21.101"></status>
+</kw>
+<kw name="Addgoods" library="pylib.newmerchant">
+<arguments>
+<arg>${tokenid}</arg>
+<arg>http://47.96.83.35:5001</arg>
+<arg>娃哈哈</arg>
+<arg>100ml</arg>
+<arg>12</arg>
+<arg>8</arg>
+<arg>20</arg>
+<arg>2</arg>
+<arg>http://qiniu.shenshoukeji.net/1223145628157671970591108c62b58894f2d1f69f1ae9016b94005.jpeg</arg>
+<arg>娃哈哈很好喝</arg>
+<arg>非常喜欢喝娃哈哈</arg>
+</arguments>
+<msg timestamp="20200108 17:29:21.143" level="INFO">{'data': None, 'success': True, 'error': {'code': 0, 'message': None}}</msg>
+<status status="PASS" starttime="20200108 17:29:21.102" endtime="20200108 17:29:21.143"></status>
+</kw>
+<kw name="Listgoods" library="pylib.newmerchant">
+<arguments>
+<arg>${tokenid}</arg>
+<arg>http://47.96.83.35:5001</arg>
+</arguments>
+<assign>
+<var>${goodslist}</var>
+</assign>
+<msg timestamp="20200108 17:29:21.181" level="INFO">[{'GoodsId': 283, 'GoodsName': '娃哈哈', 'GoodsNorms': '100ml', 'PurchasePrice': 12.0, 'OfferPrice': 8.0, 'GoodsCount': '20', 'Status': '已上架', 'CreatedAt': '2020-01-08 17:29:22', 'UpedAt': '2020-01-08 17:29:22', 'Sort': 2, 'Description': '娃哈哈很好喝', 'PicUri': 'http://qiniu.shenshoukeji.net/1223145628157671970591108c62b58894f2d1f69f1ae9016b94005.jpeg', 'GoodsDetails': '非常喜欢喝娃哈哈'}]</msg>
+<msg timestamp="20200108 17:29:21.182" level="INFO">${goodslist} = [{'GoodsId': 283, 'GoodsName': '娃哈哈', 'GoodsNorms': '100ml', 'PurchasePrice': 12.0, 'OfferPrice': 8.0, 'GoodsCount': '20', 'Status': '已上架', 'CreatedAt': '2020-01-08 17:29:22', 'UpedAt': '2020-01-08 17...</msg>
+<status status="PASS" starttime="20200108 17:29:21.144" endtime="20200108 17:29:21.182"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${goodslist}==[]</arg>
+</arguments>
+<status status="PASS" starttime="20200108 17:29:21.183" endtime="20200108 17:29:21.184"></status>
+</kw>
+<kw name="Updategoods" library="pylib.newmerchant">
+<arguments>
+<arg>${tokenid}</arg>
+<arg>http://47.96.83.35:5001</arg>
+<arg>${goodslist[0]["GoodsId"]}</arg>
+<arg>娃哈哈更新</arg>
+<arg>100ml</arg>
+<arg>12</arg>
+<arg>8</arg>
+<arg>20</arg>
+<arg>2</arg>
+<arg>http://qiniu.shenshoukeji.net/1223145628157671970591108c62b58894f2d1f69f1ae9016b94005.jpeg</arg>
+<arg>娃哈哈很好喝更新</arg>
+<arg>非常喜欢喝娃哈哈</arg>
+</arguments>
+<msg timestamp="20200108 17:29:21.225" level="INFO">{'data': None, 'success': True, 'error': {'code': 0, 'message': None}}</msg>
+<status status="PASS" starttime="20200108 17:29:21.184" endtime="20200108 17:29:21.225"></status>
+</kw>
+<kw name="Listgoods" library="pylib.newmerchant">
+<arguments>
+<arg>${tokenid}</arg>
+<arg>http://47.96.83.35:5001</arg>
+</arguments>
+<assign>
+<var>${goodslist}</var>
+</assign>
+<msg timestamp="20200108 17:29:21.262" level="INFO">[{'GoodsId': 283, 'GoodsName': '娃哈哈更新', 'GoodsNorms': '100ml', 'PurchasePrice': 12.0, 'OfferPrice': 8.0, 'GoodsCount': '20', 'Status': '已上架', 'CreatedAt': '2020-01-08 17:29:22', 'UpedAt': '2020-01-08 17:29:22', 'Sort': 2, 'Description': '娃哈哈很好喝更新', 'PicUri': 'http://qiniu.shenshoukeji.net/1223145628157671970591108c62b58894f2d1f69f1ae9016b94005.jpeg', 'GoodsDetails': '非常喜欢喝娃哈哈'}]</msg>
+<msg timestamp="20200108 17:29:21.263" level="INFO">${goodslist} = [{'GoodsId': 283, 'GoodsName': '娃哈哈更新', 'GoodsNorms': '100ml', 'PurchasePrice': 12.0, 'OfferPrice': 8.0, 'GoodsCount': '20', 'Status': '已上架', 'CreatedAt': '2020-01-08 17:29:22', 'UpedAt': '2020-01-08 ...</msg>
+<status status="PASS" starttime="20200108 17:29:21.227" endtime="20200108 17:29:21.263"></status>
+</kw>
+<kw name="${goods} IN [ @{goodslist} ]" type="for">
+<kw name="${goods} = {'GoodsId': 283, 'GoodsName': '娃哈哈更新', 'GoodsNorms': '100ml', 'PurchasePrice': 12.0, 'OfferPrice': 8.0, 'GoodsCount': '20', 'Status': '已上架', 'CreatedAt': '2020-01-08 17:29:22', 'UpedAt': '2020-01-08 1..." type="foritem">
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>&amp;{goods}[GoodsName]</arg>
+<arg>娃哈哈更新</arg>
+</arguments>
+<status status="PASS" starttime="20200108 17:29:21.265" endtime="20200108 17:29:21.265"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>添加成功</arg>
+</arguments>
+<status status="PASS" starttime="20200108 17:29:21.266" endtime="20200108 17:29:21.266"></status>
+</kw>
+<status status="PASS" starttime="20200108 17:29:21.264" endtime="20200108 17:29:21.267"></status>
+</kw>
+<status status="PASS" starttime="20200108 17:29:21.264" endtime="20200108 17:29:21.267"></status>
+</kw>
+<kw name="Deleteall" library="pylib.newmerchant" type="teardown">
+<msg timestamp="20200108 17:29:21.428" level="INFO">[{'GoodsId': 283, 'GoodsName': '娃哈哈更新', 'GoodsNorms': '100ml', 'PurchasePrice': 12.0, 'OfferPrice': 8.0, 'GoodsCount': '20', 'Status': '已上架', 'CreatedAt': '2020-01-08 17:29:22', 'UpedAt': '2020-01-08 17:29:22', 'Sort': 2, 'Description': '娃哈哈很好喝更新', 'PicUri': 'http://qiniu.shenshoukeji.net/1223145628157671970591108c62b58894f2d1f69f1ae9016b94005.jpeg', 'GoodsDetails': '非常喜欢喝娃哈哈'}]
+{'data': None, 'success': True, 'error': {'code': 0, 'message': None}}</msg>
+<status status="PASS" starttime="20200108 17:29:21.267" endtime="20200108 17:29:21.429"></status>
+</kw>
+<status status="PASS" starttime="20200108 17:29:20.977" endtime="20200108 17:29:21.430" critical="yes"></status>
+</test>
+<test id="s1-s1-t3" name="删除商品">
+<kw name="Deleteall" library="pylib.newmerchant" type="setup">
+<msg timestamp="20200108 17:29:21.507" level="INFO">[]</msg>
+<status status="PASS" starttime="20200108 17:29:21.435" endtime="20200108 17:29:21.507"></status>
+</kw>
+<kw name="Login" library="pylib.newmerchant">
+<arguments>
+<arg>13262849250</arg>
+<arg>a123321</arg>
+<arg>http://47.96.83.35:5001</arg>
+</arguments>
+<assign>
+<var>${tokenid}</var>
+</assign>
+<msg timestamp="20200108 17:29:21.546" level="INFO">${tokenid} = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMTMyNjI4NDkyNTAiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lk...</msg>
+<status status="PASS" starttime="20200108 17:29:21.509" endtime="20200108 17:29:21.546"></status>
+</kw>
+<kw name="Addgoods" library="pylib.newmerchant">
+<arguments>
+<arg>${tokenid}</arg>
+<arg>http://47.96.83.35:5001</arg>
+<arg>娃哈哈</arg>
+<arg>100ml</arg>
+<arg>12</arg>
+<arg>8</arg>
+<arg>20</arg>
+<arg>2</arg>
+<arg>http://qiniu.shenshoukeji.net/1223145628157671970591108c62b58894f2d1f69f1ae9016b94005.jpeg</arg>
+<arg>娃哈哈很好喝</arg>
+<arg>非常喜欢喝娃哈哈</arg>
+</arguments>
+<msg timestamp="20200108 17:29:21.591" level="INFO">{'data': None, 'success': True, 'error': {'code': 0, 'message': None}}</msg>
+<status status="PASS" starttime="20200108 17:29:21.547" endtime="20200108 17:29:21.592"></status>
+</kw>
+<kw name="Listgoods" library="pylib.newmerchant">
+<arguments>
+<arg>${tokenid}</arg>
+<arg>http://47.96.83.35:5001</arg>
+</arguments>
+<assign>
+<var>${goodslist}</var>
+</assign>
+<msg timestamp="20200108 17:29:21.629" level="INFO">[{'GoodsId': 284, 'GoodsName': '娃哈哈', 'GoodsNorms': '100ml', 'PurchasePrice': 12.0, 'OfferPrice': 8.0, 'GoodsCount': '20', 'Status': '已上架', 'CreatedAt': '2020-01-08 17:29:22', 'UpedAt': '2020-01-08 17:29:22', 'Sort': 2, 'Description': '娃哈哈很好喝', 'PicUri': 'http://qiniu.shenshoukeji.net/1223145628157671970591108c62b58894f2d1f69f1ae9016b94005.jpeg', 'GoodsDetails': '非常喜欢喝娃哈哈'}]</msg>
+<msg timestamp="20200108 17:29:21.629" level="INFO">${goodslist} = [{'GoodsId': 284, 'GoodsName': '娃哈哈', 'GoodsNorms': '100ml', 'PurchasePrice': 12.0, 'OfferPrice': 8.0, 'GoodsCount': '20', 'Status': '已上架', 'CreatedAt': '2020-01-08 17:29:22', 'UpedAt': '2020-01-08 17...</msg>
+<status status="PASS" starttime="20200108 17:29:21.593" endtime="20200108 17:29:21.629"></status>
+</kw>
+<kw name="Checkdelete" library="pylib.newmerchant">
+<arguments>
+<arg>${tokenid}</arg>
+<arg>${goodslist}</arg>
+<arg>${goodsid}</arg>
+</arguments>
+<msg timestamp="20200108 17:29:21.633" level="FAIL">Variable '${goodsid}' not found. Did you mean:
+    ${goodslist}</msg>
+<status status="FAIL" starttime="20200108 17:29:21.630" endtime="20200108 17:29:21.633"></status>
+</kw>
+<kw name="Deleteall" library="pylib.newmerchant" type="teardown">
+<msg timestamp="20200108 17:29:21.785" level="INFO">[{'GoodsId': 284, 'GoodsName': '娃哈哈', 'GoodsNorms': '100ml', 'PurchasePrice': 12.0, 'OfferPrice': 8.0, 'GoodsCount': '20', 'Status': '已上架', 'CreatedAt': '2020-01-08 17:29:22', 'UpedAt': '2020-01-08 17:29:22', 'Sort': 2, 'Description': '娃哈哈很好喝', 'PicUri': 'http://qiniu.shenshoukeji.net/1223145628157671970591108c62b58894f2d1f69f1ae9016b94005.jpeg', 'GoodsDetails': '非常喜欢喝娃哈哈'}]
+{'data': None, 'success': True, 'error': {'code': 0, 'message': None}}</msg>
+<status status="PASS" starttime="20200108 17:29:21.634" endtime="20200108 17:29:21.785"></status>
+</kw>
+<status status="FAIL" starttime="20200108 17:29:21.432" endtime="20200108 17:29:21.786" critical="yes">Variable '${goodsid}' not found. Did you mean:
+    ${goodslist}</status>
+</test>
+<status status="FAIL" starttime="20200108 17:29:20.411" endtime="20200108 17:29:21.789"></status>
+</suite>
+<status status="FAIL" starttime="20200108 17:29:20.385" endtime="20200108 17:29:21.795"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="1">Critical Tests</stat>
+<stat pass="2" fail="1">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0">主流程测试</stat>
+</tag>
+<suite>
+<stat pass="2" fail="1" id="s1" name="Login">Login</stat>
+<stat pass="2" fail="1" id="s1-s1" name="Username">Login.Username</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

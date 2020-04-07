@@ -4,7 +4,7 @@ import json
 class Api_web:
     #url="http://www.ccym88.com"
     url="http://47.96.83.35:3002/api"
-   # url="http://192.168.0.241:3002/api"
+    #url="http://192.168.0.241:3002/api"
     def login(self,phone,password):
         paybody={
             "phone":phone,
@@ -15,8 +15,11 @@ class Api_web:
         jsoninfo=json.dumps(paybody)
         resp=requests.post(URL,headers={'Content-Type': 'application/json'},data=jsoninfo)
         restojb=resp.json()
+    #    print(restojb)
+        return restojb
         token="Bearer "+restojb["result"]["token"]
         self.token=token
+
 
     #创建一个群聊码
     def createAdminCode(self,adminType,adminTitle,adminShowType,InvalidDate,modes,adminRemark=None):
@@ -110,9 +113,9 @@ class Api_web:
 
 if __name__ == '__main__':
     apiweb=Api_web()
-    apiweb.login("13262849250","test123456")
-    modesinf={"noRepeat":False, "administrator": False, "safeTip":True, "customerService": ""}
-    apiweb.createAdminCode(0,"我在用创建活码，能成功吗11",0,"2020-03-29",modesinf)
+    print(apiweb.login("*&……**....","test123456"))
+    #modesinf={"noRepeat":False, "administrator": False, "safeTip":True, "customerService": ""}
+   # apiweb.createAdminCode(0,"我在用创建活码，能成功吗11",0,"2020-03-29",modesinf)
   #  print(apiweb.getcodelist())
    # print(apiweb.deletecode(224))
    # print(apiweb.delete_all_code())

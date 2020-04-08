@@ -3,8 +3,8 @@ import requests
 import json
 class Api_web:
     #url="http://www.ccym88.com"
-    url="http://47.96.83.35:3002/api"
-    #url="http://192.168.0.241:3002/api"
+    #url="http://47.96.83.35:3002/api"
+    url="http://192.168.0.241:3002/api"
     def login(self,phone,password):
         paybody={
             "phone":phone,
@@ -15,17 +15,17 @@ class Api_web:
         jsoninfo=json.dumps(paybody)
         resp=requests.post(URL,headers={'Content-Type': 'application/json'},data=jsoninfo)
         restojb=resp.json()
-    #    print(restojb)
+        token = "Bearer " + restojb["result"]["token"]
+        self.token = token
         return restojb
-        token="Bearer "+restojb["result"]["token"]
-        self.token=token
+
 
 
     #创建一个群聊码
-    def createAdminCode(self,adminType,adminTitle,adminShowType,InvalidDate,modes,adminRemark=None):
+    def createAdminCode(self,id,adminType,adminTitle,adminShowType,InvalidDate,modes,adminRemark=None):
         URL=f'{self.url}/code/createAdminCode'
         paybody={
-            "Id":-1,
+            "Id":id,
             "adminType":adminType,
             "adminTitle":adminTitle,
             "modes":modes,
@@ -92,11 +92,17 @@ class Api_web:
             raise Exception("子码没有删除干净")
 
 
-#初始化环境下创建一个子码
-    def suitesetup(self,adminType,adminTitle,modes,adminShowType,InvalidDate,ChildId,ChildType,ChildTitle,ChildImageType,ChildImageName,ChildImageUrl,ChildLogo,ChildFrequency,ChildTip=None,adminRemark=None):
-        addadmincode=self.createAdminCode(adminType,adminTitle,modes,adminShowType,InvalidDate)
-        addchild=self.addChildCode(addadmincode["result"]["id"],ChildId,ChildType,ChildTitle,ChildImageType,ChildImageName,ChildImageUrl,ChildLogo,ChildFrequency)
-        return addchild
+#获取所有活码列表，找出活码ID，再创建子码,用于初始化环境下创建子码
+    def suite_setup(self,ChildId,ChildType,ChildTitle,ChildImageType,ChildImageName,ChildImageUrl,ChildLogo,ChildFrequency):
+        getcode=self.getcodelist()
+        self.addChildCode(getcode["result"]["id"],ChildId,ChildType,ChildTitle,ChildImageType,ChildImageName,ChildImageUrl,ChildLogo,ChildFrequency)
+
+
+# #初始化环境下创建一个子码
+#     def suitesetup(self,adminType,adminTitle,modes,adminShowType,InvalidDate,ChildId,ChildType,ChildTitle,ChildImageType,ChildImageName,ChildImageUrl,ChildLogo,ChildFrequency,ChildTip=None,adminRemark=None):
+#         addadmincode=self.createAdminCode(adminType,adminTitle,modes,adminShowType,InvalidDate)
+#         addchild=self.addChildCode(addadmincode["result"]["id"],ChildId,ChildType,ChildTitle,ChildImageType,ChildImageName,ChildImageUrl,ChildLogo,ChildFrequency)
+#         return addchild
 
  #获取某个活码的子码展示模式
     def getAdminShowType(self,id):
@@ -111,11 +117,18 @@ class Api_web:
         resp=requests.post(URL,data=json.dumps(data),headers={"Authorization":self.token,"Content-Type":"application/json"})
         return resp.json()
 
+ #获取某个活码分日数据
+    def getAdminCodeCounts(self,id):
+        URL=f'{self.url}/code/getAdminCodeCounts'
+        data={"Id":id}
+        resp=requests.post(URL,data=json.dumps(data),header={"Authorization":self.token,"Content-Type":"application/json"})
+        return resp.json()
+
 if __name__ == '__main__':
     apiweb=Api_web()
-    print(apiweb.login("*&……**....","test123456"))
-    #modesinf={"noRepeat":False, "administrator": False, "safeTip":True, "customerService": ""}
-   # apiweb.createAdminCode(0,"我在用创建活码，能成功吗11",0,"2020-03-29",modesinf)
+    print(apiweb.login("13774351025","test123456"))
+    modesinf={"noRepeat":False, "administrator": False, "safeTip":True, "customerService": ""}
+    apiweb.createAdminCode(-1,0,"我在用创建活码，能成功吗11",0,"2020-03-29",modesinf)
   #  print(apiweb.getcodelist())
    # print(apiweb.deletecode(224))
    # print(apiweb.delete_all_code())

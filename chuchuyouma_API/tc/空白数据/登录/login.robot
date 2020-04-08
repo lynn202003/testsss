@@ -4,8 +4,8 @@ Library  pylib.API.Api_web
 正确的手机号和密码-api00001
      [Tags]    冒烟测试
      [Documentation]    输入正常的手机号和密码
-     ${user}   login  13262849250     test123456
-     should be true   $user["result"]["phone"]=="13262849250"
+     ${user}   login  13774351025     test123456
+     should be true   $user["result"]["phone"]=="13774351025"
 
 手机号为中文-api00002
      [Documentation]    手机号为中文
@@ -24,7 +24,7 @@ Library  pylib.API.Api_web
     [Tags]    冒烟测试
     [Documentation]     创建活码
     ${dict}    create dictionary      noRepeat=False    administrator=False      safeTip=True       customerService= ""
-    ${createcode}    createAdminCode     0    我在用robot创建活码，能成功吗?        0          2020-03-31         ${dict}
+    ${createcode}    createAdminCode    -1     0    我在用robot创建活码，能成功吗?        0          2020-03-31         ${dict}
     should be true     $createcode["code"]==200
     ${codelist}    getcodelist
     ${relt}   evaluate   $codelist["result"][0]

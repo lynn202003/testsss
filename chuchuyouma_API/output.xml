@@ -1,7 +1,353 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 3.1.2 (Python 3.6.5 on win32)" generated="20200408 18:09:25.987" rpa="false">
-<suite id="s1" name="活码管理" source="D:\工作文件\处处有码\API\tc\空白数据\活码管理\活码管理.robot">
-<test id="s1-t1" name="创建一个群聊码----api000011">
+<robot generator="Robot 3.1.2 (Python 3.6.5 on win32)" generated="20200409 17:29:51.461" rpa="false">
+<suite id="s1" name="Tc" source="D:\工作文件\处处有码\API\tc">
+<suite id="s1-s1" name="空白数据" source="D:\工作文件\处处有码\API\tc\空白数据">
+<suite id="s1-s1-s1" name="D-一个活码" source="D:\工作文件\处处有码\API\tc\空白数据\d-一个活码">
+<suite id="s1-s1-s1-s1" name="子码管理" source="D:\工作文件\处处有码\API\tc\空白数据\d-一个活码\子码管理">
+<suite id="s1-s1-s1-s1-s1" name="子码管理" source="D:\工作文件\处处有码\API\tc\空白数据\d-一个活码\子码管理\子码管理.robot">
+<test id="s1-s1-s1-s1-s1-t1" name="增加一个子码-api00020">
+<kw name="Run Keywords" library="BuiltIn" type="setup">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>login</arg>
+<arg>13774351025</arg>
+<arg>test123456</arg>
+<arg>AND</arg>
+<arg>delete_all_code</arg>
+<arg>AND</arg>
+<arg>createAdminCode</arg>
+<arg>-1</arg>
+<arg>0</arg>
+<arg>我在用robot创建活码</arg>
+<arg>0</arg>
+<arg>2020-03-31</arg>
+<arg>${dictdata}</arg>
+</arguments>
+<kw name="Login" library="pylib.API.Api_web">
+<arguments>
+<arg>13774351025</arg>
+<arg>test123456</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:51.615" endtime="20200409 17:29:56.239"></status>
+</kw>
+<kw name="Delete All Code" library="pylib.API.Api_web">
+<status status="PASS" starttime="20200409 17:29:56.239" endtime="20200409 17:29:56.603"></status>
+</kw>
+<kw name="Create Admin Code" library="pylib.API.Api_web">
+<arguments>
+<arg>-1</arg>
+<arg>0</arg>
+<arg>我在用robot创建活码</arg>
+<arg>0</arg>
+<arg>2020-03-31</arg>
+<arg>${dictdata}</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:56.604" endtime="20200409 17:29:56.930"></status>
+</kw>
+<status status="PASS" starttime="20200409 17:29:51.614" endtime="20200409 17:29:56.930"></status>
+</kw>
+<kw name="Getcodelist" library="pylib.API.Api_web">
+<assign>
+<var>${codelist}</var>
+</assign>
+<msg timestamp="20200409 17:29:56.964" level="INFO">${codelist} = {'result': [{'adminType': 0, 'adminTitle': '我在用robot创建活码', 'adminRemark': None, 'id': 1293, 'adminImage': 'http://qiniu.shenshoukeji.net/qrcode202004092954.svg', 'childCount': 0, 'counts': {'canUserCo...</msg>
+<status status="PASS" starttime="20200409 17:29:56.932" endtime="20200409 17:29:56.964"></status>
+</kw>
+<kw name="Add Child Code" library="pylib.API.Api_web">
+<arguments>
+<arg>${codelist}[result][0][id]</arg>
+<arg>-1</arg>
+<arg>0</arg>
+<arg>ji1251266</arg>
+<arg>0</arg>
+<arg>yttt66</arg>
+<arg>http://qiniu.shenshoukeji.net/0326113958timg.jpg</arg>
+<arg>http://qiniu.shenshoukeji.net/0305163619group-default.png</arg>
+<arg>28</arg>
+</arguments>
+<assign>
+<var>${addchild}</var>
+</assign>
+<msg timestamp="20200409 17:29:56.995" level="INFO">${addchild} = {'result': None, 'code': 200, 'message': ''}</msg>
+<status status="PASS" starttime="20200409 17:29:56.966" endtime="20200409 17:29:56.995"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>$addchild["code"]==200</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:56.996" endtime="20200409 17:29:57.016"></status>
+</kw>
+<kw name="Get Child List" library="pylib.API.Api_web">
+<arguments>
+<arg>${codelist}[result][0][id]</arg>
+</arguments>
+<assign>
+<var>${afterchildlist}</var>
+</assign>
+<msg timestamp="20200409 17:29:57.051" level="INFO">${afterchildlist} = {'result': [{'id': 1723, 'childType': 0, 'childTitle': 'ji1251266', 'childImageType': 0, 'childImageUrl': None, 'childImageName': None, 'childLogo': 'http://qiniu.shenshoukeji.net/0305163619group-defa...</msg>
+<status status="PASS" starttime="20200409 17:29:57.017" endtime="20200409 17:29:57.051"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>$afterchildlist["result"][0]["childTitle"]=="ji1251266"</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:57.052" endtime="20200409 17:29:57.054"></status>
+</kw>
+<kw name="Delete Childcode" library="pylib.API.Api_web" type="teardown">
+<arguments>
+<arg>${codelist}[result][0][id]</arg>
+<arg>${afterchildlist}[result][0][id]</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:57.055" endtime="20200409 17:29:57.083"></status>
+</kw>
+<doc>新建子码</doc>
+<tags>
+<tag>冒烟测试</tag>
+</tags>
+<status status="PASS" starttime="20200409 17:29:51.612" endtime="20200409 17:29:57.084" critical="yes"></status>
+</test>
+<test id="s1-s1-s1-s1-s1-t2" name="修改一个子码-api00021">
+<kw name="Run Keywords" library="BuiltIn" type="setup">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>login</arg>
+<arg>13774351025</arg>
+<arg>test123456</arg>
+<arg>AND</arg>
+<arg>delete_all_code</arg>
+<arg>AND</arg>
+<arg>createAdminCode</arg>
+<arg>-1</arg>
+<arg>0</arg>
+<arg>我在用robot创建活码</arg>
+<arg>0</arg>
+<arg>2020-03-31</arg>
+<arg>${dictdata}</arg>
+</arguments>
+<kw name="Login" library="pylib.API.Api_web">
+<arguments>
+<arg>13774351025</arg>
+<arg>test123456</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:57.092" endtime="20200409 17:29:57.161"></status>
+</kw>
+<kw name="Delete All Code" library="pylib.API.Api_web">
+<status status="PASS" starttime="20200409 17:29:57.162" endtime="20200409 17:29:57.238"></status>
+</kw>
+<kw name="Create Admin Code" library="pylib.API.Api_web">
+<arguments>
+<arg>-1</arg>
+<arg>0</arg>
+<arg>我在用robot创建活码</arg>
+<arg>0</arg>
+<arg>2020-03-31</arg>
+<arg>${dictdata}</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:57.239" endtime="20200409 17:29:57.388"></status>
+</kw>
+<status status="PASS" starttime="20200409 17:29:57.091" endtime="20200409 17:29:57.388"></status>
+</kw>
+<kw name="Getcodelist" library="pylib.API.Api_web">
+<assign>
+<var>${codelist}</var>
+</assign>
+<msg timestamp="20200409 17:29:57.424" level="INFO">${codelist} = {'result': [{'adminType': 0, 'adminTitle': '我在用robot创建活码', 'adminRemark': None, 'id': 1294, 'adminImage': 'http://qiniu.shenshoukeji.net/qrcode202004092955.svg', 'childCount': 0, 'counts': {'canUserCo...</msg>
+<status status="PASS" starttime="20200409 17:29:57.390" endtime="20200409 17:29:57.424"></status>
+</kw>
+<kw name="Add Child Code" library="pylib.API.Api_web">
+<arguments>
+<arg>${codelist}[result][0][id]</arg>
+<arg>-1</arg>
+<arg>0</arg>
+<arg>ji1251266</arg>
+<arg>0</arg>
+<arg>yttt66</arg>
+<arg>http://qiniu.shenshoukeji.net/0326113958timg.jpg</arg>
+<arg>http://qiniu.shenshoukeji.net/0305163619group-default.png</arg>
+<arg>28</arg>
+</arguments>
+<assign>
+<var>${addchild}</var>
+</assign>
+<msg timestamp="20200409 17:29:57.442" level="INFO">${addchild} = {'result': None, 'code': 200, 'message': ''}</msg>
+<status status="PASS" starttime="20200409 17:29:57.425" endtime="20200409 17:29:57.442"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>$addchild["code"]==200</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:57.443" endtime="20200409 17:29:57.445"></status>
+</kw>
+<kw name="Get Child List" library="pylib.API.Api_web">
+<arguments>
+<arg>${codelist}[result][0][id]</arg>
+</arguments>
+<assign>
+<var>${afterchildlist}</var>
+</assign>
+<msg timestamp="20200409 17:29:57.462" level="INFO">${afterchildlist} = {'result': [{'id': 1724, 'childType': 0, 'childTitle': 'ji1251266', 'childImageType': 0, 'childImageUrl': None, 'childImageName': None, 'childLogo': 'http://qiniu.shenshoukeji.net/0305163619group-defa...</msg>
+<status status="PASS" starttime="20200409 17:29:57.446" endtime="20200409 17:29:57.462"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>$afterchildlist["result"][0]["childTitle"]=="ji1251266"</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:57.463" endtime="20200409 17:29:57.466"></status>
+</kw>
+<kw name="Add Child Code" library="pylib.API.Api_web">
+<arguments>
+<arg>${codelist}[result][0][id]</arg>
+<arg>${afterchildlist}[result][0][id]</arg>
+<arg>0</arg>
+<arg>ji1251267</arg>
+<arg>0</arg>
+<arg>yttt67</arg>
+<arg>http://qiniu.shenshoukeji.net/0326113958timg.jpg</arg>
+<arg>http://qiniu.shenshoukeji.net/0305163619group-default.png</arg>
+<arg>29</arg>
+</arguments>
+<assign>
+<var>${childcode}</var>
+</assign>
+<msg timestamp="20200409 17:29:57.487" level="INFO">${childcode} = {'result': None, 'code': 200, 'message': ''}</msg>
+<status status="PASS" starttime="20200409 17:29:57.467" endtime="20200409 17:29:57.487"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>$childcode["code"]==200</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:57.488" endtime="20200409 17:29:57.491"></status>
+</kw>
+<kw name="Delete Childcode" library="pylib.API.Api_web" type="teardown">
+<arguments>
+<arg>${codelist}[result][0][id]</arg>
+<arg>${afterchildlist}[result][0][id]</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:57.492" endtime="20200409 17:29:57.506"></status>
+</kw>
+<doc>修改子码</doc>
+<tags>
+<tag>冒烟测试</tag>
+</tags>
+<status status="PASS" starttime="20200409 17:29:57.086" endtime="20200409 17:29:57.508" critical="yes"></status>
+</test>
+<test id="s1-s1-s1-s1-s1-t3" name="删除一个子码-api00022">
+<kw name="Run Keywords" library="BuiltIn" type="setup">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>login</arg>
+<arg>13774351025</arg>
+<arg>test123456</arg>
+<arg>AND</arg>
+<arg>delete_all_code</arg>
+<arg>AND</arg>
+<arg>createAdminCode</arg>
+<arg>-1</arg>
+<arg>0</arg>
+<arg>我在用robot创建活码</arg>
+<arg>0</arg>
+<arg>2020-03-31</arg>
+<arg>${dictdata}</arg>
+</arguments>
+<kw name="Login" library="pylib.API.Api_web">
+<arguments>
+<arg>13774351025</arg>
+<arg>test123456</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:57.516" endtime="20200409 17:29:57.553"></status>
+</kw>
+<kw name="Delete All Code" library="pylib.API.Api_web">
+<status status="PASS" starttime="20200409 17:29:57.554" endtime="20200409 17:29:57.615"></status>
+</kw>
+<kw name="Create Admin Code" library="pylib.API.Api_web">
+<arguments>
+<arg>-1</arg>
+<arg>0</arg>
+<arg>我在用robot创建活码</arg>
+<arg>0</arg>
+<arg>2020-03-31</arg>
+<arg>${dictdata}</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:57.616" endtime="20200409 17:29:57.708"></status>
+</kw>
+<status status="PASS" starttime="20200409 17:29:57.515" endtime="20200409 17:29:57.709"></status>
+</kw>
+<kw name="Getcodelist" library="pylib.API.Api_web">
+<assign>
+<var>${codelist}</var>
+</assign>
+<msg timestamp="20200409 17:29:57.742" level="INFO">${codelist} = {'result': [{'adminType': 0, 'adminTitle': '我在用robot创建活码', 'adminRemark': None, 'id': 1295, 'adminImage': '', 'childCount': 0, 'counts': {'canUserCount': 0, 'expiredCount': 0, 'adminScanCount': 0, 'ch...</msg>
+<status status="PASS" starttime="20200409 17:29:57.711" endtime="20200409 17:29:57.743"></status>
+</kw>
+<kw name="Add Child Code" library="pylib.API.Api_web">
+<arguments>
+<arg>${codelist}[result][0][id]</arg>
+<arg>-1</arg>
+<arg>0</arg>
+<arg>ji1251266</arg>
+<arg>0</arg>
+<arg>yttt66</arg>
+<arg>http://qiniu.shenshoukeji.net/0326113958timg.jpg</arg>
+<arg>http://qiniu.shenshoukeji.net/0305163619group-default.png</arg>
+<arg>28</arg>
+</arguments>
+<assign>
+<var>${addchild}</var>
+</assign>
+<msg timestamp="20200409 17:29:57.765" level="INFO">${addchild} = {'result': None, 'code': 200, 'message': ''}</msg>
+<status status="PASS" starttime="20200409 17:29:57.744" endtime="20200409 17:29:57.765"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>$addchild["code"]==200</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:57.767" endtime="20200409 17:29:57.769"></status>
+</kw>
+<kw name="Get Child List" library="pylib.API.Api_web">
+<arguments>
+<arg>${codelist}[result][0][id]</arg>
+</arguments>
+<assign>
+<var>${afterchildlist}</var>
+</assign>
+<msg timestamp="20200409 17:29:57.786" level="INFO">${afterchildlist} = {'result': [{'id': 1725, 'childType': 0, 'childTitle': 'ji1251266', 'childImageType': 0, 'childImageUrl': None, 'childImageName': None, 'childLogo': 'http://qiniu.shenshoukeji.net/0305163619group-defa...</msg>
+<status status="PASS" starttime="20200409 17:29:57.770" endtime="20200409 17:29:57.786"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>$afterchildlist["result"][0]["childTitle"]=="ji1251266"</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:57.787" endtime="20200409 17:29:57.790"></status>
+</kw>
+<kw name="Delete Childcode" library="pylib.API.Api_web">
+<arguments>
+<arg>${codelist}[result][0][id]</arg>
+<arg>${afterchildlist}[result][0][id]</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:57.790" endtime="20200409 17:29:57.805"></status>
+</kw>
+<doc>删除一个子码</doc>
+<tags>
+<tag>冒烟测试</tag>
+</tags>
+<status status="PASS" starttime="20200409 17:29:57.510" endtime="20200409 17:29:57.806" critical="yes"></status>
+</test>
+<status status="PASS" starttime="20200409 17:29:51.606" endtime="20200409 17:29:57.809"></status>
+</suite>
+<status status="PASS" starttime="20200409 17:29:51.603" endtime="20200409 17:29:57.820"></status>
+</suite>
+<status status="PASS" starttime="20200409 17:29:51.596" endtime="20200409 17:29:57.830"></status>
+</suite>
+<suite id="s1-s1-s2" name="活码管理" source="D:\工作文件\处处有码\API\tc\空白数据\活码管理">
+<suite id="s1-s1-s2-s1" name="活码管理" source="D:\工作文件\处处有码\API\tc\空白数据\活码管理\活码管理.robot">
+<test id="s1-s1-s2-s1-t1" name="创建一个群聊码----api000011">
 <kw name="Run Keywords" library="BuiltIn" type="setup">
 <doc>Executes all the given keywords in a sequence.</doc>
 <arguments>
@@ -16,12 +362,12 @@
 <arg>13774351025</arg>
 <arg>test123456</arg>
 </arguments>
-<status status="PASS" starttime="20200408 18:09:26.112" endtime="20200408 18:09:26.146"></status>
+<status status="PASS" starttime="20200409 17:29:57.868" endtime="20200409 17:29:57.914"></status>
 </kw>
 <kw name="Delete All Code" library="pylib.API.Api_web">
-<status status="PASS" starttime="20200408 18:09:26.146" endtime="20200408 18:09:26.168"></status>
+<status status="PASS" starttime="20200409 17:29:57.914" endtime="20200409 17:29:58.008"></status>
 </kw>
-<status status="PASS" starttime="20200408 18:09:26.112" endtime="20200408 18:09:26.168"></status>
+<status status="PASS" starttime="20200409 17:29:57.867" endtime="20200409 17:29:58.009"></status>
 </kw>
 <kw name="Create Admin Code" library="pylib.API.Api_web">
 <arguments>
@@ -30,52 +376,382 @@
 <arg>我在用创建活码，能成功吗11</arg>
 <arg>0</arg>
 <arg>2020-03-29</arg>
-<arg>${dict}</arg>
+<arg>${dictdata}</arg>
 </arguments>
 <assign>
 <var>${beforecodelist}</var>
 </assign>
-<msg timestamp="20200408 18:09:26.178" level="INFO">${beforecodelist} = {'type': 'https://tools.ietf.org/html/rfc7231#section-6.5.1', 'title': 'One or more validation errors occurred.', 'status': 400, 'traceId': '|489309d4-470e9ca3f2125c4c.', 'errors': {'$.Id': ['The JSON...</msg>
-<status status="PASS" starttime="20200408 18:09:26.169" endtime="20200408 18:09:26.179"></status>
+<msg timestamp="20200409 17:29:58.108" level="INFO">${beforecodelist} = {'result': {'id': 1296, 'adminImage': ''}, 'code': 200, 'message': ''}</msg>
+<status status="PASS" starttime="20200409 17:29:58.011" endtime="20200409 17:29:58.108"></status>
 </kw>
 <kw name="Should Be True" library="BuiltIn">
 <doc>Fails if the given condition is not true.</doc>
 <arguments>
 <arg>$beforecodelist["code"]==200</arg>
 </arguments>
-<msg timestamp="20200408 18:09:26.186" level="FAIL">Evaluating expression 'RF_VAR_beforecodelist ["code"]==200' failed: KeyError: 'code'</msg>
-<status status="FAIL" starttime="20200408 18:09:26.179" endtime="20200408 18:09:26.186"></status>
+<status status="PASS" starttime="20200409 17:29:58.109" endtime="20200409 17:29:58.111"></status>
+</kw>
+<kw name="Getcodelist" library="pylib.API.Api_web">
+<assign>
+<var>${aftercodelist}</var>
+</assign>
+<msg timestamp="20200409 17:29:58.139" level="INFO">${aftercodelist} = {'result': [{'adminType': 0, 'adminTitle': '我在用创建活码，能成功吗11', 'adminRemark': None, 'id': 1296, 'adminImage': '', 'childCount': 0, 'counts': {'canUserCount': 0, 'expiredCount': 0, 'adminScanCount': 0, '...</msg>
+<status status="PASS" starttime="20200409 17:29:58.112" endtime="20200409 17:29:58.139"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>$aftercodelist["result"][0]["id"]==$beforecodelist["result"]["id"]</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:58.141" endtime="20200409 17:29:58.142"></status>
 </kw>
 <kw name="Deletecode" library="pylib.API.Api_web" type="teardown">
 <arguments>
 <arg>${beforecodelist}[result][id]</arg>
 </arguments>
-<msg timestamp="20200408 18:09:26.187" level="FAIL">Dictionary '${beforecodelist}' has no key 'result'.</msg>
-<status status="FAIL" starttime="20200408 18:09:26.187" endtime="20200408 18:09:26.187">Dictionary '${beforecodelist}' has no key 'result'.</status>
+<status status="PASS" starttime="20200409 17:29:58.143" endtime="20200409 17:29:58.163"></status>
 </kw>
 <doc>创建一个群聊码</doc>
 <tags>
 <tag>冒烟测试</tag>
 </tags>
-<status status="FAIL" starttime="20200408 18:09:26.108" endtime="20200408 18:09:26.188" critical="yes">Evaluating expression 'RF_VAR_beforecodelist ["code"]==200' failed: KeyError: 'code'
-
-Also teardown failed:
-Dictionary '${beforecodelist}' has no key 'result'.</status>
+<status status="PASS" starttime="20200409 17:29:57.865" endtime="20200409 17:29:58.163" critical="yes"></status>
 </test>
-<status status="FAIL" starttime="20200408 18:09:25.989" endtime="20200408 18:09:26.191"></status>
+<test id="s1-s1-s2-s1-t2" name="创建一个客服码----api000012">
+<kw name="Run Keywords" library="BuiltIn" type="setup">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>login</arg>
+<arg>13774351025</arg>
+<arg>test123456</arg>
+<arg>AND</arg>
+<arg>delete_all_code</arg>
+</arguments>
+<kw name="Login" library="pylib.API.Api_web">
+<arguments>
+<arg>13774351025</arg>
+<arg>test123456</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:58.175" endtime="20200409 17:29:58.200"></status>
+</kw>
+<kw name="Delete All Code" library="pylib.API.Api_web">
+<status status="PASS" starttime="20200409 17:29:58.201" endtime="20200409 17:29:58.226"></status>
+</kw>
+<status status="PASS" starttime="20200409 17:29:58.174" endtime="20200409 17:29:58.226"></status>
+</kw>
+<kw name="Create Admin Code" library="pylib.API.Api_web">
+<arguments>
+<arg>-1</arg>
+<arg>1</arg>
+<arg>我在用创建活码，能成功吗11</arg>
+<arg>1</arg>
+<arg>2020-03-29</arg>
+<arg>${dictdata}</arg>
+</arguments>
+<assign>
+<var>${beforecodelist}</var>
+</assign>
+<msg timestamp="20200409 17:29:58.339" level="INFO">${beforecodelist} = {'result': {'id': 1297, 'adminImage': 'http://qiniu.shenshoukeji.net/qrcode202004092956.svg'}, 'code': 200, 'message': ''}</msg>
+<status status="PASS" starttime="20200409 17:29:58.227" endtime="20200409 17:29:58.340"></status>
+</kw>
+<kw name="Getcodelist" library="pylib.API.Api_web">
+<assign>
+<var>${aftercodelist}</var>
+</assign>
+<msg timestamp="20200409 17:29:58.380" level="INFO">${aftercodelist} = {'result': [{'adminType': 1, 'adminTitle': '我在用创建活码，能成功吗11', 'adminRemark': None, 'id': 1297, 'adminImage': 'http://qiniu.shenshoukeji.net/qrcode202004092956.svg', 'childCount': 0, 'counts': {'canUser...</msg>
+<status status="PASS" starttime="20200409 17:29:58.342" endtime="20200409 17:29:58.380"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>$aftercodelist["result"][0]["id"]==$beforecodelist["result"]["id"]</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:58.381" endtime="20200409 17:29:58.383"></status>
+</kw>
+<kw name="Deletecode" library="pylib.API.Api_web" type="teardown">
+<arguments>
+<arg>${beforecodelist}[result][id]</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:58.384" endtime="20200409 17:29:58.410"></status>
+</kw>
+<doc>创建一个客服码</doc>
+<tags>
+<tag>冒烟测试</tag>
+</tags>
+<status status="PASS" starttime="20200409 17:29:58.167" endtime="20200409 17:29:58.411" critical="yes"></status>
+</test>
+<test id="s1-s1-s2-s1-t3" name="修改一个群聊码----api000013">
+<kw name="Run Keywords" library="BuiltIn" type="setup">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>login</arg>
+<arg>13774351025</arg>
+<arg>test123456</arg>
+<arg>AND</arg>
+<arg>delete_all_code</arg>
+</arguments>
+<kw name="Login" library="pylib.API.Api_web">
+<arguments>
+<arg>13774351025</arg>
+<arg>test123456</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:58.422" endtime="20200409 17:29:58.454"></status>
+</kw>
+<kw name="Delete All Code" library="pylib.API.Api_web">
+<status status="PASS" starttime="20200409 17:29:58.454" endtime="20200409 17:29:58.482"></status>
+</kw>
+<status status="PASS" starttime="20200409 17:29:58.421" endtime="20200409 17:29:58.482"></status>
+</kw>
+<kw name="Create Admin Code" library="pylib.API.Api_web">
+<arguments>
+<arg>-1</arg>
+<arg>0</arg>
+<arg>我在用创建活码，能成功吗11</arg>
+<arg>1</arg>
+<arg>2020-03-20</arg>
+<arg>${dictdata}</arg>
+</arguments>
+<assign>
+<var>${beforecodelist}</var>
+</assign>
+<msg timestamp="20200409 17:29:58.653" level="INFO">${beforecodelist} = {'result': {'id': 1298, 'adminImage': ''}, 'code': 200, 'message': ''}</msg>
+<status status="PASS" starttime="20200409 17:29:58.483" endtime="20200409 17:29:58.653"></status>
+</kw>
+<kw name="Getcodelist" library="pylib.API.Api_web">
+<assign>
+<var>${aftercodelist}</var>
+</assign>
+<msg timestamp="20200409 17:29:58.679" level="INFO">${aftercodelist} = {'result': [{'adminType': 0, 'adminTitle': '我在用创建活码，能成功吗11', 'adminRemark': None, 'id': 1298, 'adminImage': '', 'childCount': 0, 'counts': {'canUserCount': 0, 'expiredCount': 0, 'adminScanCount': 0, '...</msg>
+<status status="PASS" starttime="20200409 17:29:58.654" endtime="20200409 17:29:58.679"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>$aftercodelist["result"][0]["id"]==$beforecodelist["result"]["id"]</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:58.680" endtime="20200409 17:29:58.682"></status>
+</kw>
+<kw name="Create Admin Code" library="pylib.API.Api_web">
+<arguments>
+<arg>${beforecodelist}[result][id]</arg>
+<arg>0</arg>
+<arg>我在用修改活码，能成功吗11</arg>
+<arg>0</arg>
+<arg>2020-03-29</arg>
+<arg>${dictdata}</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:58.683" endtime="20200409 17:29:58.702"></status>
+</kw>
+<kw name="Deletecode" library="pylib.API.Api_web" type="teardown">
+<arguments>
+<arg>${beforecodelist}[result][id]</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:58.704" endtime="20200409 17:29:58.723"></status>
+</kw>
+<doc>修改一个群聊码</doc>
+<tags>
+<tag>冒烟测试</tag>
+</tags>
+<status status="PASS" starttime="20200409 17:29:58.414" endtime="20200409 17:29:58.724" critical="yes"></status>
+</test>
+<test id="s1-s1-s2-s1-t4" name="修改一个客服码----api000014">
+<kw name="Run Keywords" library="BuiltIn" type="setup">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>login</arg>
+<arg>13774351025</arg>
+<arg>test123456</arg>
+<arg>AND</arg>
+<arg>delete_all_code</arg>
+</arguments>
+<kw name="Login" library="pylib.API.Api_web">
+<arguments>
+<arg>13774351025</arg>
+<arg>test123456</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:58.736" endtime="20200409 17:29:58.761"></status>
+</kw>
+<kw name="Delete All Code" library="pylib.API.Api_web">
+<status status="PASS" starttime="20200409 17:29:58.761" endtime="20200409 17:29:58.785"></status>
+</kw>
+<status status="PASS" starttime="20200409 17:29:58.735" endtime="20200409 17:29:58.785"></status>
+</kw>
+<kw name="Create Admin Code" library="pylib.API.Api_web">
+<arguments>
+<arg>-1</arg>
+<arg>1</arg>
+<arg>我在用创建活码，能成功吗11</arg>
+<arg>1</arg>
+<arg>2020-03-20</arg>
+<arg>${dictdata}</arg>
+</arguments>
+<assign>
+<var>${beforecodelist}</var>
+</assign>
+<msg timestamp="20200409 17:29:58.903" level="INFO">${beforecodelist} = {'result': {'id': 1299, 'adminImage': ''}, 'code': 200, 'message': ''}</msg>
+<status status="PASS" starttime="20200409 17:29:58.787" endtime="20200409 17:29:58.903"></status>
+</kw>
+<kw name="Getcodelist" library="pylib.API.Api_web">
+<assign>
+<var>${aftercodelist}</var>
+</assign>
+<msg timestamp="20200409 17:29:58.931" level="INFO">${aftercodelist} = {'result': [{'adminType': 1, 'adminTitle': '我在用创建活码，能成功吗11', 'adminRemark': None, 'id': 1299, 'adminImage': '', 'childCount': 0, 'counts': {'canUserCount': 0, 'expiredCount': 0, 'adminScanCount': 0, '...</msg>
+<status status="PASS" starttime="20200409 17:29:58.904" endtime="20200409 17:29:58.932"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>$aftercodelist["result"][0]["id"]==$beforecodelist["result"]["id"]</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:58.933" endtime="20200409 17:29:58.935"></status>
+</kw>
+<kw name="Create Admin Code" library="pylib.API.Api_web">
+<arguments>
+<arg>${beforecodelist}[result][id]</arg>
+<arg>0</arg>
+<arg>我在用修改客服码，能成功吗11</arg>
+<arg>0</arg>
+<arg>2020-03-29</arg>
+<arg>${dictdata}</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:58.936" endtime="20200409 17:29:58.957"></status>
+</kw>
+<kw name="Deletecode" library="pylib.API.Api_web" type="teardown">
+<arguments>
+<arg>${beforecodelist}[result][id]</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:58.959" endtime="20200409 17:29:58.979"></status>
+</kw>
+<doc>修改一个客服码</doc>
+<tags>
+<tag>冒烟测试</tag>
+</tags>
+<status status="PASS" starttime="20200409 17:29:58.728" endtime="20200409 17:29:58.980" critical="yes"></status>
+</test>
+<test id="s1-s1-s2-s1-t5" name="删除一个客服码----api000015">
+<kw name="Run Keywords" library="BuiltIn" type="setup">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>login</arg>
+<arg>13774351025</arg>
+<arg>test123456</arg>
+<arg>AND</arg>
+<arg>delete_all_code</arg>
+</arguments>
+<kw name="Login" library="pylib.API.Api_web">
+<arguments>
+<arg>13774351025</arg>
+<arg>test123456</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:58.992" endtime="20200409 17:29:59.017"></status>
+</kw>
+<kw name="Delete All Code" library="pylib.API.Api_web">
+<status status="PASS" starttime="20200409 17:29:59.017" endtime="20200409 17:29:59.043"></status>
+</kw>
+<status status="PASS" starttime="20200409 17:29:58.992" endtime="20200409 17:29:59.044"></status>
+</kw>
+<kw name="Create Admin Code" library="pylib.API.Api_web">
+<arguments>
+<arg>-1</arg>
+<arg>1</arg>
+<arg>我在用创建活码，能成功吗11</arg>
+<arg>1</arg>
+<arg>2020-03-29</arg>
+<arg>${dictdata}</arg>
+</arguments>
+<assign>
+<var>${beforecodelist}</var>
+</assign>
+<msg timestamp="20200409 17:29:59.150" level="INFO">${beforecodelist} = {'result': {'id': 1300, 'adminImage': ''}, 'code': 200, 'message': ''}</msg>
+<status status="PASS" starttime="20200409 17:29:59.045" endtime="20200409 17:29:59.151"></status>
+</kw>
+<kw name="Getcodelist" library="pylib.API.Api_web">
+<assign>
+<var>${aftercodelist}</var>
+</assign>
+<msg timestamp="20200409 17:29:59.194" level="INFO">${aftercodelist} = {'result': [{'adminType': 1, 'adminTitle': '我在用创建活码，能成功吗11', 'adminRemark': None, 'id': 1300, 'adminImage': '', 'childCount': 0, 'counts': {'canUserCount': 0, 'expiredCount': 0, 'adminScanCount': 0, '...</msg>
+<status status="PASS" starttime="20200409 17:29:59.153" endtime="20200409 17:29:59.194"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>$aftercodelist["result"][0]["id"]==$beforecodelist["result"]["id"]</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:59.195" endtime="20200409 17:29:59.198"></status>
+</kw>
+<kw name="Deletecode" library="pylib.API.Api_web">
+<arguments>
+<arg>${beforecodelist}[result][id]</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:59.198" endtime="20200409 17:29:59.223"></status>
+</kw>
+<doc>删除一个客服码</doc>
+<tags>
+<tag>冒烟测试</tag>
+</tags>
+<status status="PASS" starttime="20200409 17:29:58.984" endtime="20200409 17:29:59.224" critical="yes"></status>
+</test>
+<status status="PASS" starttime="20200409 17:29:57.854" endtime="20200409 17:29:59.230"></status>
+</suite>
+<status status="PASS" starttime="20200409 17:29:57.843" endtime="20200409 17:29:59.249"></status>
+</suite>
+<suite id="s1-s1-s3" name="登录" source="D:\工作文件\处处有码\API\tc\空白数据\登录">
+<suite id="s1-s1-s3-s1" name="Login" source="D:\工作文件\处处有码\API\tc\空白数据\登录\login.robot">
+<test id="s1-s1-s3-s1-t1" name="正确的手机号和密码-api00001">
+<kw name="Login" library="pylib.API.Api_web">
+<arguments>
+<arg>13774351025</arg>
+<arg>test123456</arg>
+</arguments>
+<assign>
+<var>${user}</var>
+</assign>
+<msg timestamp="20200409 17:29:59.307" level="INFO">${user} = {'result': {'phone': '13774351025', 'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiIzNCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvY...</msg>
+<status status="PASS" starttime="20200409 17:29:59.281" endtime="20200409 17:29:59.307"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>$user["result"]["phone"]=="13774351025"</arg>
+</arguments>
+<status status="PASS" starttime="20200409 17:29:59.308" endtime="20200409 17:29:59.309"></status>
+</kw>
+<doc>输入正常的手机号和密码</doc>
+<tags>
+<tag>冒烟测试</tag>
+</tags>
+<status status="PASS" starttime="20200409 17:29:59.275" endtime="20200409 17:29:59.309" critical="yes"></status>
+</test>
+<status status="PASS" starttime="20200409 17:29:59.268" endtime="20200409 17:29:59.311"></status>
+</suite>
+<status status="PASS" starttime="20200409 17:29:59.262" endtime="20200409 17:29:59.316"></status>
+</suite>
+<status status="PASS" starttime="20200409 17:29:51.492" endtime="20200409 17:29:59.322"></status>
+</suite>
+<status status="PASS" starttime="20200409 17:29:51.464" endtime="20200409 17:29:59.328"></status>
 </suite>
 <statistics>
 <total>
-<stat pass="0" fail="1">Critical Tests</stat>
-<stat pass="0" fail="1">All Tests</stat>
+<stat pass="9" fail="0">Critical Tests</stat>
+<stat pass="9" fail="0">All Tests</stat>
 </total>
 <tag>
-<stat pass="0" fail="1">冒烟测试</stat>
+<stat pass="9" fail="0">冒烟测试</stat>
 </tag>
 <suite>
-<stat pass="0" fail="1" id="s1" name="活码管理">活码管理</stat>
+<stat pass="9" fail="0" id="s1" name="Tc">Tc</stat>
+<stat pass="9" fail="0" id="s1-s1" name="空白数据">Tc.空白数据</stat>
+<stat pass="3" fail="0" id="s1-s1-s1" name="D-一个活码">Tc.空白数据.D-一个活码</stat>
+<stat pass="3" fail="0" id="s1-s1-s1-s1" name="子码管理">Tc.空白数据.D-一个活码.子码管理</stat>
+<stat pass="3" fail="0" id="s1-s1-s1-s1-s1" name="子码管理">Tc.空白数据.D-一个活码.子码管理.子码管理</stat>
+<stat pass="5" fail="0" id="s1-s1-s2" name="活码管理">Tc.空白数据.活码管理</stat>
+<stat pass="5" fail="0" id="s1-s1-s2-s1" name="活码管理">Tc.空白数据.活码管理.活码管理</stat>
+<stat pass="1" fail="0" id="s1-s1-s3" name="登录">Tc.空白数据.登录</stat>
+<stat pass="1" fail="0" id="s1-s1-s3-s1" name="Login">Tc.空白数据.登录.Login</stat>
 </suite>
 </statistics>
 <errors>
+<msg timestamp="20200409 17:29:51.452" level="WARN">Collapsing consecutive whitespace during parsing is deprecated. Fix ' #' in file 'D:\工作文件\处处有码\API\tc\空白数据\登录\login.robot' on line 13.</msg>
+<msg timestamp="20200409 17:29:51.453" level="WARN">Collapsing consecutive whitespace during parsing is deprecated. Fix ' #' in file 'D:\工作文件\处处有码\API\tc\空白数据\登录\login.robot' on line 19.</msg>
 </errors>
 </robot>

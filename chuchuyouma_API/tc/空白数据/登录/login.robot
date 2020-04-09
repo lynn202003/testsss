@@ -20,15 +20,5 @@ Library  pylib.API.Api_web
      should be true   $user["code"]==300
 
 
-创建活码-api00004
-    [Tags]    冒烟测试
-    [Documentation]     创建活码
-    ${dict}    create dictionary      noRepeat=False    administrator=False      safeTip=True       customerService= ""
-    ${createcode}    createAdminCode    -1     0    我在用robot创建活码，能成功吗?        0          2020-03-31         ${dict}
-    should be true     $createcode["code"]==200
-    ${codelist}    getcodelist
-    ${relt}   evaluate   $codelist["result"][0]
-    should be true   $relt["id"]==$createcode["result"]["id"]
-    [Teardown]    deletecode      ${createcode}[result][id]
 
 

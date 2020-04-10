@@ -3,6 +3,7 @@ import requests
 import json
 class Api_web:
     ROBOT_LIBRARY_SCOPE = "GLOBAL"   #解决初始化生成的实例和用例生成的实例是同一个实例
+
     #url="http://www.ccym88.com"
     #url="http://47.96.83.35:3002/api"
     url="http://192.168.0.241:3002/api"
@@ -16,8 +17,8 @@ class Api_web:
         jsoninfo=json.dumps(paybody)
         resp=requests.post(URL,headers={'Content-Type': 'application/json'},data=jsoninfo)
         restojb=resp.json()
-        token = "Bearer " + restojb["result"]["token"]
-        self.token = token
+        tokens = "Bearer " + restojb["result"]["token"]
+        self.token = tokens
         return restojb
 
 
@@ -132,9 +133,54 @@ class Api_web:
         resp = requests.post(URL, data=json.dumps(data),headers={"Authorization": self.token, "Content-Type": "application/json"})
         return resp.json()
 
-    def Calculation(self,id):
-        URL = f'{self.url}/pay/Calculation'
-        data={"id":id}
+ #获取页面所有等级
+    def GetSetMealList(self):
+        URL = f'{self.url}/global/GetSetMealList'
+        resp = requests.post(URL,headers={"Authorization": self.token, "Content-Type": "application/json"})
+        return resp.json()
+
+#获取用户会员信息
+    def GetUserVipInfo(self):
+        URL = f'{self.url}/auth/GetUserVipInfo'
+        resp = requests.get(URL,headers={"Authorization": self.token, "Content-Type": "application/json"})
+        return resp.json()
+#立即开通
+    def Calculation(self,id): #id: 1免费 2基础月付 3基础年付 4旗舰月付 5旗舰年付,cycle: 1为月付，2为年付
+        URL=f'{self.url}/pay/Calculation'
+        data={"id":int(id)}
+        resp = requests.post(URL, data=json.dumps(data),headers={"Authorization": self.token, "Content-Type": "application/json"})
+     #   self.money=resp["result"]["money"]
+        return resp.json()
+
+#支付方式
+    def GetPayOrder(self,cycle,money,type,setMealId):  #type:1支付宝，2微信
+        URL = f'{self.url}/pay/GetPayOrder'
+       # money=(self.Calculation(int(id)))["result"]["money"]
+        data={"cycle": int(cycle), "money":int(money), "type":int(type), "setMealId":int(setMealId)}
+        resp = requests.post(URL, data=json.dumps(data),headers={"Authorization": self.token, "Content-Type": "application/json"})
+        # self.orderNo=resp["result"]["orderNo"]
+        return resp.json()
+#点击已成功支付
+    def PayBack(self,type,orderNo):
+        URL = f'{self.url}/pay/PayBack'
+
+        data = {"type":int(type),"orderNo":orderNo}
+        resp = requests.post(URL, data=json.dumps(data),headers={"Authorization": self.token, "Content-Type": "application/json"})
+        return resp.json()
+
+#    判断用户等级，根据等级开通会员
+    def paypass(self,cycle,type,id):
+        uservip=self.GetUserVipInfo()#获取用户等级
+        userlevel=uservip["result"]["level"]
+        if userlevel==0 or userlevel==1 :  #等级为0或者1时，id只能为2345
+
+            moneyinfo=self.Calculation(id)
+        else:  #等级为2时，id只能为45
+            moneyinfo=self.Calculation(id)
+        payorder=self.GetPayOrder(cycle,moneyinfo["result"]["money"],type,id)
+        self.PayBack(type,payorder["result"]["orderNo"])
+
+
 
 if __name__ == '__main__':
     apiweb=Api_web()
@@ -149,5 +195,8 @@ if __name__ == '__main__':
    # apiweb.delete_childcode(255,654)
    #  apiweb.suitesetup(-1,0,"ji1251266",0,"yttt66","http://qiniu.shenshoukeji.net/0326113958timg.jpg","http://qiniu.shenshoukeji.net/0305163619group-default.png",28)
     print(apiweb.getTargetCode(createcode["result"]["id"]))
+    idinfo=apiweb.Calculation(4)
+    getpay=apiweb.GetPayOrder(1,idinfo["result"]["money"],1,4)
+    apiweb. PayBack(1,getpay["result"]["orderNo"])
 
 

@@ -7,4 +7,7 @@ Library  pylib.API.Api_web
      [Documentation]    支付
      ${user}   login  13774351025     test123456
      should be true   $user["result"]["phone"]=="13774351025"
-#     判断用户等级
+     ${idinfo}     Calculation     4
+     ${getpay}     GetPayOrder    1        &{idinfo}[result][money]       1        4
+     ${payback}    PayBack     1     &{getpay}[result][orderNo]
+     should be true      $payback["code"]==200

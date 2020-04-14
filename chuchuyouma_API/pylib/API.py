@@ -168,35 +168,23 @@ class Api_web:
         resp = requests.post(URL, data=json.dumps(data),headers={"Authorization": self.token, "Content-Type": "application/json"})
         return resp.json()
 
-#    判断用户等级，根据等级开通会员
-    def paypass(self,cycle,type,id):
-        uservip=self.GetUserVipInfo()#获取用户等级
-        userlevel=uservip["result"]["level"]
-        if userlevel==0 or userlevel==1 :  #等级为0或者1时，id只能为2345
-
-            moneyinfo=self.Calculation(id)
-        else:  #等级为2时，id只能为45
-            moneyinfo=self.Calculation(id)
-        payorder=self.GetPayOrder(cycle,moneyinfo["result"]["money"],type,id)
-        self.PayBack(type,payorder["result"]["orderNo"])
-
 
 
 if __name__ == '__main__':
     apiweb=Api_web()
     print(apiweb.login("13774351025","test123456"))
-    modesinf={"noRepeat":False, "administrator": False, "safeTip":True, "customerService": ""}
-    createcode=apiweb.createAdminCode(-1,0,"我在用创建活码，能成功吗11",0,"2020-03-29",modesinf)
+    # modesinf={"noRepeat":False, "administrator": False, "safeTip":True, "customerService": ""}
+  #  createcode=apiweb.createAdminCode(-1,0,"我在用创建活码，能成功吗11",0,"2020-03-29",modesinf)
   #  print(apiweb.getcodelist())
    # print(apiweb.deletecode(224))
    # print(apiweb.delete_all_code())
-    print(apiweb.addChildCode(createcode["result"]["id"],-1,0,"ji12512",0,"yttt","http://qiniu.shenshoukeji.net/0326113958timg.jpg","http://qiniu.shenshoukeji.net/0305163619group-default.png",23))
+  #  print(apiweb.addChildCode(createcode["result"]["id"],-1,0,"ji12512",0,"yttt","http://qiniu.shenshoukeji.net/0326113958timg.jpg","http://qiniu.shenshoukeji.net/0305163619group-default.png",23))
     #print(apiweb.getChildList(225))
    # apiweb.delete_childcode(255,654)
    #  apiweb.suitesetup(-1,0,"ji1251266",0,"yttt66","http://qiniu.shenshoukeji.net/0326113958timg.jpg","http://qiniu.shenshoukeji.net/0305163619group-default.png",28)
-    print(apiweb.getTargetCode(createcode["result"]["id"]))
+ #   getCode=apiweb.getTargetCode()
     idinfo=apiweb.Calculation(4)
     getpay=apiweb.GetPayOrder(1,idinfo["result"]["money"],1,4)
-    apiweb. PayBack(1,getpay["result"]["orderNo"])
+    print(apiweb. PayBack(1,getpay["result"]["orderNo"]))
 
 

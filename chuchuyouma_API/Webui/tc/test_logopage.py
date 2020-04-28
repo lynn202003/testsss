@@ -16,8 +16,11 @@ class testlogopage(login,loginout,basepage):
         self.send_user("13262849250")
         self.send_password("test123456")
         self.click_login()
+        time.sleep(3)
         if self.checkusername()=='13262849250':
             print("帐号登录成功")
+        else:
+            print("没有登录成功")
     def checkloginout(self):
 
         if self.checklefttext()=="首页,数据概览,活码工具,二维码工具,消息中心,会员中心" and self.checkmidtext()=='活码管理,创建活码,二维码管理,生成二维码':
@@ -28,4 +31,5 @@ class testlogopage(login,loginout,basepage):
 
 a=testlogopage()
 a.login_sucess()
+a.checkloginout()
 

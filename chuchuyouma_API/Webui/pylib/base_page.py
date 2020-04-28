@@ -5,6 +5,7 @@ import os
 from Webui import getcwd
 from Webui.logs.log import log1
 class basepage:
+    ROBOT_LIBRARY_SCOPE = "GLOBAL"
     def __init__(self):
         if a==firefox_path:
             self.driver=webdriver.Firefox(executable_path=a)
@@ -14,7 +15,7 @@ class basepage:
             log1.info('打开的浏览器为Chrome')
     def get_img(self):# 截图
         path=os.path.join(getcwd.get_cwd(),'screenshots/')  # 拼接截图保存路径
-        rq=time.strftime('%Y%m%d%H%N',time.localtime(time.time())) # 按格式获取当前时间
+        rq=time.strftime('%Y%m%d%H%M',time.localtime(time.time())) # 按格式获取当前时间
         screen_name=path+rq+'.png'  # 拼接截图文件名
         try:
             self.driver.get_screenshot_as_file(screen_name)
@@ -83,10 +84,13 @@ class basepage:
       #封装获取元素的值
     def elementtext(self,by,values):
         element=self.find_element(by,values)
-        ele_text=element.text
-        log1.info(f'获取元素的内容是:{ele_text}')
-        return element
-
+        try:
+            ele_text=element.text
+            log1.info(f'获取元素的内容是:{ele_text}')
+            return ele_text
+        except:
+            log1.error("获取元素内容失败",exc_info=1)
+            self.get_img()
      #封装输入方法
     def sendkey(self,by,values,text):
         element=self.find_element(by,values)
@@ -126,6 +130,36 @@ class basepage:
     def closebrow(self):#关闭网页
         self.driver.close()
         log1.info('关闭浏览器')
+
+    def uploadimg(self,pathload):   #上传图片
+        import win32com.client
+        from selenium.webdriver.common.keys import Keys
+        shell = win32com.client.Dispatch("WScript.Shell")
+        try:
+            shell.sendkeys(r"f'{pathload}'" + '\r\n')
+            time.sleep(2)
+            log1.info("上传图片正确")
+        except:
+            log1.error("上传图片失败",exc_info=1)
+            self.get_img()
+
+    def cleartext(self,by,values): #清除数据
+        self.find_element(by,values).clear()
+
+    def delallimg(self,by,values):#删除所有图片
+        elements=self.find_elements(by,values)
+        try:
+            for i in range(0,len(elements)):
+                if elements > 1:
+                    elements[0].self.click(by,values)
+
+                else:
+                    break
+                log1.info("删除所有图片成功")
+        except:
+            log1.error("删除所有图片失败",exc_info=1)
+            self.get_img()
+
 if __name__ == '__main__':
     a=basepage()
     a.openbrow("http://www.ccym88.com")

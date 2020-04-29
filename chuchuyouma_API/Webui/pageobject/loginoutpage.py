@@ -1,6 +1,7 @@
 from selenium import webdriver
 from Webui.pylib.base_page import basepage
 class loginout(basepage):
+    ROBOT_LIBRARY_SCOPE = "GLOBAL"
     def checklefttext(self):  #左侧列表5个导航
         getelementstext=self.getelementstext("css",'.bar-list>div')
         return getelementstext

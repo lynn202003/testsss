@@ -81,6 +81,7 @@ class basepage:
                 self.get_img()  # 调用截图
         else:
             log1.error('输入的元素定位方式错误')
+
       #封装获取元素的值
     def elementtext(self,by,values):
         element=self.find_element(by,values)

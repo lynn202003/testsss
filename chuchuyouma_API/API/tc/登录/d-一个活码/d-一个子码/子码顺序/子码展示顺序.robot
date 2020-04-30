@@ -1,9 +1,7 @@
 *** Settings ***
-Library  pylib.API.Api_web
-Variables   cfg.py   #因此用例中要多次用到固定的字典，故将设为变量放在配置文件中，这在里来引入用variables
-Test Setup     run keywords    login    13774351025   test123456      AND    delete_all_code   AND
-                 ...    createAdminCode   -1    0    我在用robot创建活码       0      2020-03-31     ${dictdata}    AND
-                 ...    suitesetup     -1     0       ji1251266     0       yttt66     http://qiniu.shenshoukeji.net/0326113958timg.jpg      http://qiniu.shenshoukeji.net/0305163619group-default.png       28
+Library  API.pylib.API.Api_web
+Variables   API/cfg.py   #因此用例中要多次用到固定的字典，故将设为变量放在配置文件中，在这里来引入用variables
+
 *** Test Cases ***
 获取某个活码的子码展示模式--api000030
      ${getlist}       getcodelist

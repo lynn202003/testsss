@@ -26,10 +26,10 @@ class addadminlogo(basepage):
 
     def sendpinlv(self, text):  # 输入切换频率
         self.sendkey("css", '.create-content>.childEdit input[placeholder="请输入切换频率"]',text)
-    def clearpinlv(self):
+    def clearpinlv(self):   # 清除切换频率
         self.cleartext("css", '.create-content>.childEdit input[placeholder="请输入切换频率"]')
 
-    def sendpinlv(self, text):  # 输入引导文字
+    def send_beizhu_text(self, text):  # 输入引导文字
         self.sendkey("css", '.create-content>.childEdit textarea[type="textarea"]', text)
 
     def clicklower(self):  # 点击下一步

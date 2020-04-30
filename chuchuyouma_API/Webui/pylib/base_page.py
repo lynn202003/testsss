@@ -1,18 +1,15 @@
 from selenium import webdriver
-from cfg import *
+from Webui.cfg import *
 import time
 import os
 from Webui import getcwd
 from Webui.logs.log import log1
 class basepage:
     ROBOT_LIBRARY_SCOPE = "GLOBAL"
-    def __init__(self):
-        if a==firefox_path:
-            self.driver=webdriver.Firefox(executable_path=a)
-            log1.info('打开的浏览器为firefox')
-        elif a==google_path:
-            self.driver=webdriver.Chrome(a)
-            log1.info('打开的浏览器为Chrome')
+
+    def __init__(self,driver):
+        self.driver=driver
+
     def get_img(self):# 截图
         path=os.path.join(getcwd.get_cwd(),'screenshots/')  # 拼接截图保存路径
         rq=time.strftime('%Y%m%d%H%M',time.localtime(time.time())) # 按格式获取当前时间
@@ -125,19 +122,30 @@ class basepage:
 
     def openbrow(self,url):#打开网页
         self.driver.get(url)
-        # self.driver.get("http://192.168.0.241:3003/")
         self.driver.implicitly_wait(10)
-        log1.info('打开浏览器')
+        log1.info('打开网页')
     def closebrow(self):#关闭网页
         self.driver.close()
-        log1.info('关闭浏览器')
+        log1.info('关闭网页')
+
+    def alert_text(self): #获取浏览器自带弹框的text
+        time.sleep(4)
+        try:
+            textb=self.driver.switch_to.alert
+            texts=textb.text
+            log1.info(f"获取浏览器自带弹框值为:{texts}")
+            return texts
+        except:
+            log1.error("获取浏览器自带弹框值失败",exc_info=1)
+            self.get_img()
+
 
     def uploadimg(self,pathload):   #上传图片
         import win32com.client
-        from selenium.webdriver.common.keys import Keys
+        # from selenium.webdriver.common.keys import Keys
         shell = win32com.client.Dispatch("WScript.Shell")
         try:
-            shell.sendkeys(r"f'{pathload}'" + '\r\n')
+            shell.sendkeys(f'{pathload}' + '\r\n')
             time.sleep(2)
             log1.info("上传图片正确")
         except:
@@ -146,6 +154,7 @@ class basepage:
 
     def cleartext(self,by,values): #清除数据
         self.find_element(by,values).clear()
+        log1.info("数据清除成功")
 
     def delallimg(self,by,values):#删除所有图片
         elements=self.find_elements(by,values)

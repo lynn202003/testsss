@@ -1,7 +1,7 @@
 from selenium import webdriver
 from Webui.pylib.base_page import basepage
 class loginout(basepage):
-    ROBOT_LIBRARY_SCOPE = "GLOBAL"
+
     def checklefttext(self):  #左侧列表5个导航
         getelementstext=self.getelementstext("css",'.bar-list>div')
         return getelementstext
@@ -19,3 +19,22 @@ class loginout(basepage):
         elementtext=self.elementtext('xpath','//div[@class="account flex-middle-y"]/div[@class="account-name"]')
         return elementtext
 
+    def click_hmgl(self):  #点击左侧导航栏中活码管理
+        hmgl=self.click("css",'.bar-list>div:nth-child(3)>div:nth-child(2)>div:nth-child(2)')
+
+    def click_cjhm(self):  #点击左侧导航栏中创建活码
+        cjhm=self.click("css",'.bar-list>div:nth-child(3)>div:nth-child(2)>div:nth-child(1)')
+    def click_sjgl(self):  #点击左侧导航栏中数据概览
+        sjgl=self.click("css",'.bar-list>div:nth-child(2)')
+
+    def click_news(self):  # 点击左侧导航栏中消息中心
+        news = self.click("css", '.bar-list>div:nth-child(5)')
+
+    def click_vips(self):  # 点击左侧导航栏中会员中心
+        vips = self.click("css", '.bar-list>div:nth-child(6)')
+
+    def click_homepage(self):  # 点击左侧导航栏首页
+        homepage= self.click("css", '.bar-list>div:nth-child(1)')
+
+    def click_ewmgj(self):  # 点击左侧导航栏二维码工具
+        ewmgj= self.click("css", '.bar-list>div:nth-child(4)')

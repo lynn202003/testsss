@@ -17,9 +17,11 @@ class Api_web:
         jsoninfo=json.dumps(paybody)
         resp=requests.post(URL,headers={'Content-Type': 'application/json'},data=jsoninfo)
         restojb=resp.json()
-        tokens = "Bearer " + restojb["result"]["token"]
-        self.token = tokens
-        return restojb
+        if restojb["code"]==200:
+            tokens = "Bearer " + restojb["result"]["token"]
+            self.token = tokens
+            return restojb
+
 
 
 

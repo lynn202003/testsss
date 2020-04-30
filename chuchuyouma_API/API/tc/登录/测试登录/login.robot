@@ -1,5 +1,5 @@
 *** Settings ***
-Library  pylib.API.Api_web
+Library  API.pylib.API.Api_web
 *** Test Cases ***
 正确的手机号和密码-api00001
      [Tags]    冒烟测试

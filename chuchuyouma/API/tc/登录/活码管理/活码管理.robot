@@ -3,9 +3,6 @@ Library  API.pylib.API.Api_web
 Variables   API/cfg.py   #因此用例中要多次用到固定的字典，故将设为变量放在配置文件中，这在里来引入用variables
 
 *** Test Cases ***
-221
-    log to console    4525
-
 创建一个群聊码----api000011
     [Tags]    冒烟测试
     [Documentation]      创建一个群聊码

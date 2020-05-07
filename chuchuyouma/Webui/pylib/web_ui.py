@@ -42,6 +42,7 @@ class web_ui:
         values=self.driver.find_element_by_xpath('//div[@class="account flex-middle-y"]/div[@class="account-name"]')
         if values.text=='13262849250':
              print("帐号登录成功")
+
     # def paymoney(self):
     #     self.driver.find_element_by_css_selector(".bar-list>div:nth-child(6)>div:nth-child(2)>div:nth-child(1) .name")
     #     uservip = self.GetUserVipInfo()

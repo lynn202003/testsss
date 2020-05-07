@@ -139,6 +139,15 @@ class basepage:
             log1.error("获取浏览器自带弹框值失败",exc_info=1)
             self.get_img()
 
+    def click_alert(self): #点击自带弹框
+        time.sleep(2)
+        try:
+            textb=self.driver.switch_to.alert
+            textb.accept()
+            log1.info("系统自带弹框点击确定按扭")
+        except:
+            log1.error("自带弹框点击失败",exc_info=1)
+            self.get_img()
 
     def uploadimg(self,pathload):   #上传图片
         import win32com.client

@@ -1,9 +1,0 @@
---pythonpath .
---name 回归测试
---test *011
---test *012
---test *013
---test *014
---test *015
-tc\空白数据\活码管理.robot
-

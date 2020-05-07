@@ -21,6 +21,8 @@ class Api_web:
             tokens = "Bearer " + restojb["result"]["token"]
             self.token = tokens
             return restojb
+        elif restojb["code"]==300:
+            return restojb
 
 
 
@@ -79,21 +81,31 @@ class Api_web:
         return resp.json()
 
     #删除一个子码
-    def delete_childcode(self,AdminId,ChildId):
+    def delete_childcode(self,ChildId):
         URL=f'{self.url}/code/deleteChildCode'
-        data={"AdminId":AdminId,
-              "ChildId":ChildId}
+        data={ "Id":int(ChildId)}
         resp=requests.post(URL,data=json.dumps(data),headers={"Authorization":self.token,"Content-Type":"application/json"})
         return resp.json()
 
     #删除一个活码下的所有的子码
-    def delete_all_childcode(self,AdminId,ChildId):
-        childlist=self.getChildList()
+    def delete_all_childcode(self,adminid):
+        childlist=self.getChildList(adminid)
+        print(childlist)
         for one in childlist["result"]:
-            self.delete_childcode(AdminId,one["id"])
-        afterlist=self.getChildList()
+            print(one)
+            self.delete_childcode(one["id"])
+        afterlist=self.getChildList(adminid)
+        print(afterlist)
         if afterlist["result"]!=[]:
             raise Exception("子码没有删除干净")
+
+
+     #获取某个活码下的所有子码并且全部删除,用于初始化删除所有子码
+    def suite_delallchild(self):
+        getcodelisttext=self.getcodelist()
+        if getcodelisttext["result"]!=[]:
+            self.delete_all_childcode(getcodelisttext["result"][0]['id'])
+
 
 
 #获取所有活码列表，找出活码ID，再创建子码,用于初始化环境下创建子码
@@ -175,9 +187,10 @@ class Api_web:
 if __name__ == '__main__':
     apiweb=Api_web()
     print(apiweb.login("13774351025","test123456"))
-    # modesinf={"noRepeat":False, "administrator": False, "safeTip":True, "customerService": ""}
-  #  createcode=apiweb.createAdminCode(-1,0,"我在用创建活码，能成功吗11",0,"2020-03-29",modesinf)
-  #  print(apiweb.getcodelist())
+    modesinf={"noRepeat":False, "administrator": False, "safeTip":True, "customerService": ""}
+    createcode=apiweb.createAdminCode(-1,0,"我在用创建活码，能成功吗11",0,"2020-03-29",modesinf)
+    print(createcode)
+    # print(apiweb.getcodelist())
    # print(apiweb.deletecode(224))
    # print(apiweb.delete_all_code())
   #  print(apiweb.addChildCode(createcode["result"]["id"],-1,0,"ji12512",0,"yttt","http://qiniu.shenshoukeji.net/0326113958timg.jpg","http://qiniu.shenshoukeji.net/0305163619group-default.png",23))
@@ -185,8 +198,9 @@ if __name__ == '__main__':
    # apiweb.delete_childcode(255,654)
    #  apiweb.suitesetup(-1,0,"ji1251266",0,"yttt66","http://qiniu.shenshoukeji.net/0326113958timg.jpg","http://qiniu.shenshoukeji.net/0305163619group-default.png",28)
  #   getCode=apiweb.getTargetCode()
-    idinfo=apiweb.Calculation(4)
-    getpay=apiweb.GetPayOrder(1,idinfo["result"]["money"],1,4)
-    print(apiweb. PayBack(1,getpay["result"]["orderNo"]))
-
+ #    idinfo=apiweb.Calculation(4)
+ #    getpay=apiweb.GetPayOrder(1,idinfo["result"]["money"],1,4)
+ #    print(apiweb. PayBack(1,getpay["result"]["orderNo"]))
+    c=apiweb.suite_delallchild()
+    print(c)
 

@@ -6,7 +6,7 @@ Variables       Webui/cfg.py
 Library  Webui.pylib.base_page.basepage      ${getwebdriver}
 Library  Webui.pageobject.loginoutpage.loginout       ${getwebdriver}
 Library  Webui.pageobject.logopage.login          ${getwebdriver}
-Test Setup   Webui.pylib.base_page.basepage.openbrow     http://www.ccym88.com
+Test Setup   Webui.pylib.base_page.basepage.openbrow      ${url_path}
 Suite Teardown      Webui.pylib.base_page.basepage.closebrow
 
 *** Test Cases ***

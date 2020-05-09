@@ -5,15 +5,13 @@ Variables      Webui/pylib/getdriver.py
 Library  Webui.pylib.base_page.basepage      ${getwebdriver}
 Library  Webui.pageobject.loginoutpage.loginout       ${getwebdriver}
 Library  Webui.pageobject.logopage.login          ${getwebdriver}
-#Test Setup     Webui.pageobject.main_process.logincusess    ${user_name}      ${pass_word}     ${url_path}
-#Test Teardown     Webui.pylib.base_page.basepage.closebrow
-
+Library  Webui.pageobject.main_process
 *** Test Cases ***
 
 检查登录后页面显示--ui10001
     ${getlefttext}     checklefttext
     ${getmidtext}       checkmidtext
-    run keyword if   ${getlefttext}=="首页,数据概览,活码工具,二维码工具,消息中心,会员中心"  and  ${getmidtext}=='活码管理,创建活码,二维码管理,生成二维码'
+    run keyword if   $getlefttext=="首页,数据概览,活码工具,二维码工具,消息中心,会员中心" and $getmidtext=='活码管理,创建活码,二维码管理,生成二维码'
     ...  log to console       页面内容显示正确
 
 

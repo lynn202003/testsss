@@ -2,10 +2,10 @@ from selenium import webdriver
 from Webui.pageobject.logopage import login
 from Webui.pageobject.loginoutpage import loginout
 import time
-from Webui.pylib.getdriver import getwebdriver
+# from Webui.pylib.getdriver import getwebdriver
 from Webui.pylib.base_page import basepage
 
-def logincusess(username,password,url):
+def logincusess(username,password,url,getwebdriver):
     openbrowns=basepage(getwebdriver)
     openbrowns.openbrow(url)
     login_user = login(getwebdriver)

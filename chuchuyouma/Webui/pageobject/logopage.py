@@ -22,11 +22,11 @@ class login(basepage):
         return password_error_text
 
     def get_username(self):   #获取登录页面用户名输入框默认内容
-        get_username_text=self.elementtext("css",".board>div:nth-child(4)>div:nth-child(1) input")
+        get_username_text=self.default_text("css",".board>div:nth-child(4)>div:nth-child(1) input","placeholder")
         return get_username_text
 
     def get_password(self):  # 获取登录页面密码输入框默认内容
-        get_password_text = self.elementtext("css", ".board>div:nth-child(4)>div:nth-child(2) input")
+        get_password_text = self.default_text("css", ".board>div:nth-child(4)>div:nth-child(2) input","placeholder")
         return get_password_text
 
 

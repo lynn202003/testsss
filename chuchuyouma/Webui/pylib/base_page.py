@@ -89,6 +89,20 @@ class basepage:
         except:
             log1.error("获取元素内容失败",exc_info=1)
             self.get_img()
+
+        # 封装获取输入框属性值，例用户名输入框默认值
+
+    def default_text(self, by, values,attribute):
+        element = self.find_element(by, values)
+        try:
+            ele_text = element.get_attribute(attribute)
+            log1.info(f'获取输入框中默认内容是:{ele_text}')
+            return ele_text
+        except:
+            log1.error("获取输入框默认内容失败", exc_info=1)
+            self.get_img()
+
+
      #封装输入方法
     def sendkey(self,by,values,text):
         element=self.find_element(by,values)
